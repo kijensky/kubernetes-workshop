@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: kuard
+  name: kuard
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: kuar-demo
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: kuar-demo
+    spec:
+      containers:
+      - image: gcr.io/kuar-demo/kuard-amd64:1
+        imagePullPolicy: IfNotPresent
+        name: kuard
+      restartPolicy: Always
